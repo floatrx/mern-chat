@@ -1,0 +1,16 @@
+version: "3.8"
+
+name: mongo-chat
+
+services:
+    mongodb:
+        image: mongo:latest
+        container_name: mongo-chat
+        restart: always
+        ports:
+            - "27018:27017"
+        volumes:
+            - ./data:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: user
+            MONGO_INITDB_ROOT_PASSWORD: password
