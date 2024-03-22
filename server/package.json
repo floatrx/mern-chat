@@ -11,7 +11,13 @@
     "pretty": "prettier --write .",
     "mongo": "cd mongo && docker-compose up -d"
   },
-  "keywords": ["api", "express", "typescript", "socket.io", "mongodb"],
+  "keywords": [
+    "api",
+    "express",
+    "typescript",
+    "socket.io",
+    "mongodb"
+  ],
   "author": "floatrx <ifloatrx@gmail.com>",
   "license": "ISC",
   "dependencies": {

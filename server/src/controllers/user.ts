@@ -6,8 +6,8 @@ import { User } from '@/models/user';
 import type { IUserAuthResponse, IUserBase, IUserCreatePayload } from '@/types';
 
 /**
- * @desc    Get user profile
- * @route   GET /api/users/profile
+ * @description    Get user profile
+ * @route   GET /api/users
  * @access  Private
  * @returns {Object} users list
  * @param   {Object} req.query.search - search keyword
@@ -26,8 +26,8 @@ export const allUsers = expressAsyncHandler(async (req: Request<never, IUserBase
 });
 
 /**
- * @desc    Register a new user
- * @route   POST /api/users/register
+ * @description    Register a new user
+ * @route   POST /api/users
  * @access  Public
  * @param   {Object} user { name, email, password }
  * @returns {Object} user with token
@@ -68,7 +68,7 @@ export const registerUser = expressAsyncHandler(async (req: Request<never, IUser
 });
 
 /**
- * @desc    Auth user & get token
+ * @description    Auth user & get token
  * @route   POST /api/users/login
  * @access  Public
  * @param   email
