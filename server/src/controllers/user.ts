@@ -1,18 +1,17 @@
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 
 import { generateToken } from '@/lib/utils';
 import { User } from '@/models/user';
-import type { IUserAuthResponse, IUserBase, IUserCreatePayload } from '@/types';
+import type { IUserAuthResponse, IUserBase, IUserCreatePayload, IUserLoginPayload } from '@/types';
 
 /**
- * @description    Get user profile
- * @route   GET /api/users
- * @access  Private
- * @returns {Object} users list
- * @param   {Object} req.query.search - search keyword
+ * @description     Get user profile
+ * @route           GET /api/users
+ * @access          Private
+ * @param           {Object} req.query.search - search keyword
  */
-export const allUsers = expressAsyncHandler(async (req: Request<never, IUserBase[]>, res) => {
+export const allUsers = expressAsyncHandler(async (req: Request<never, IUserBase[]>, res: Response) => {
   const keyword = req.query.search
     ? {
         $or: [{ name: { $regex: req.query.search, $options: 'i' } }, { email: { $regex: req.query.search, $options: 'i' } }],
@@ -26,13 +25,12 @@ export const allUsers = expressAsyncHandler(async (req: Request<never, IUserBase
 });
 
 /**
- * @description    Register a new user
- * @route   POST /api/users
- * @access  Public
- * @param   {Object} user { name, email, password }
- * @returns {Object} user with token
+ * @description     Register a new user
+ * @route           POST /api/users
+ * @access          Public
+ * @returns         user with token
  */
-export const registerUser = expressAsyncHandler(async (req: Request<never, IUserAuthResponse, IUserCreatePayload>, res) => {
+export const registerUser = expressAsyncHandler(async (req: Request<never, IUserAuthResponse, IUserCreatePayload>, res: Response) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
@@ -44,6 +42,7 @@ export const registerUser = expressAsyncHandler(async (req: Request<never, IUser
 
   if (userExists) {
     res.status(400);
+    console.log('User already exists');
     throw new Error('User already exists');
   }
 
@@ -68,15 +67,17 @@ export const registerUser = expressAsyncHandler(async (req: Request<never, IUser
 });
 
 /**
- * @description    Auth user & get token
- * @route   POST /api/users/login
- * @access  Public
- * @param   email
- * @param   password
- * @returns {Object} user
+ * @description   Auth user & get token
+ * @route         POST /api/users/login
+ * @access        Public
  */
-export const authUser = expressAsyncHandler(async (req, res) => {
+export const authUser = expressAsyncHandler(async (req: Request<never, never, IUserLoginPayload>, res: Response) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    res.status(400);
+    throw new Error('Email and Password are required');
+  }
 
   const user = await User.findOne({ email });
 

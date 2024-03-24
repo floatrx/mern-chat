@@ -15,6 +15,7 @@ export const notFound = (req: Request, res: Response, next: NextFunction) => {
  * @returns status <StatusCode> if internal server error with JSON { message: <ErrorMessage> }
  */
 export const mainErrorHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  console.log('mainErrorHandler', err.message);
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode);
   res.json({

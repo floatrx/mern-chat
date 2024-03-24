@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
 
-import type { IMessage } from '@/types/message';
+import type { IMessageDocument } from '@/types/message';
 
-const messageSchema = new Schema<IMessage>(
+const messageSchema = new Schema<IMessageDocument>(
   {
     sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     content: { type: String, trim: true },
@@ -12,6 +12,6 @@ const messageSchema = new Schema<IMessage>(
   { timestamps: true },
 );
 
-const Message = mongoose.model<IMessage>('Message', messageSchema);
+const Message = mongoose.model<IMessageDocument>('Message', messageSchema);
 
 export { Message };

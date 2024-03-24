@@ -1,8 +1,9 @@
 import mongoose, { Schema } from 'mongoose';
 
-import type { IChat } from '@/types/chat';
+import { setupJSONTransform } from '@/lib/transform';
+import type { IChatDocument } from '@/types/chat';
 
-const chatSchema = new Schema<IChat>(
+const chatSchema = new Schema<IChatDocument>(
   {
     chatName: { type: String, trim: true },
     isGroupChat: { type: Boolean, default: false },
@@ -16,6 +17,8 @@ const chatSchema = new Schema<IChat>(
   { timestamps: true },
 );
 
-const Chat = mongoose.model<IChat>('Chat', chatSchema);
+setupJSONTransform(chatSchema);
+
+const Chat = mongoose.model<IChatDocument>('Chat', chatSchema);
 
 export { Chat };

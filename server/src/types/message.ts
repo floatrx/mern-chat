@@ -1,11 +1,10 @@
-import type { IChat, IUser } from '@/types';
+import type { IChatDocument, IUserDocument } from '@/types';
 
 export interface IMessage {
-  _id: string;
-  sender: IUser;
+  sender: IUserDocument;
   content: string;
-  chat: IChat;
-  readBy: IUser[];
-  createdAt: string;
-  updatedAt: string;
+  chat: IChatDocument;
+  readBy: IUserDocument[];
 }
+
+export interface IMessageDocument extends IMessage, Document {}

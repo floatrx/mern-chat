@@ -35,3 +35,8 @@ export interface IUserAuthResponse {
 export interface IUsersListResponse {
   users: IUserBase[];
 }
+
+export interface IUserLoginPayload {
+  email?: string;
+  password?: string;
+}
