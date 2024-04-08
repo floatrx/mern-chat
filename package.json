@@ -12,6 +12,7 @@
   "license": "ISC",
   "scripts": {
     "server": "cd server && yarn dev",
+    "client": "cd client && yarn dev",
     "mongo": "cd mongo && docker-compose up -d",
     "format": "pretty-quick --pattern '**/*.{ts,tsx,js,jsx,json,md}'",
     "pretty": "prettier --write ."
