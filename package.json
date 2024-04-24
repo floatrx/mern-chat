@@ -1,18 +1,12 @@
 {
-  "name": "mern-blog",
-  "version": "1.0.0",
-  "keywords": [
-    "mongodb",
-    "express",
-    "socket.io",
-    "react",
-    "node"
-  ],
+  "name": "mern-chat",
+  "version": "0.0.0",
   "author": "floatrx <ifloatrx@gmail.com>",
   "license": "ISC",
   "scripts": {
     "server": "cd server && yarn dev",
     "client": "cd client && yarn dev",
+    "dev": "concurrently -n 'app,api' -c 'magenta,green.bold' 'yarn server' 'yarn client'",
     "mongo": "cd mongo && docker-compose up -d",
     "format": "pretty-quick --pattern '**/*.{ts,tsx,js,jsx,json,md}'",
     "pretty": "prettier --write ."
@@ -20,7 +14,7 @@
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@typescript-eslint/eslint-plugin": "^7.1.0",
-    "@typescript-eslint/parser": "^7.1.0",
+    "@typescript-eslint/parser": "^7.6.0",
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -28,6 +22,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "prettier": "^3.2.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.4"
   }
 }
