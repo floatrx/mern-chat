@@ -1,14 +1,14 @@
-import cors from 'cors';
-import express, { Request, Response } from 'express';
-import { Server } from 'socket.io';
-
 import { PORT } from '@/config/const';
 import { connectToMongo } from '@/config/db';
 import { mainErrorHandler, notFound, syntaxErrorHandler } from '@/middleware/errors';
 import { chatRoutes } from '@/routes/chat';
 import { messageRoutes } from '@/routes/message';
 import { userRoutes } from '@/routes/user';
-import type { IMessage, IMessageDocument, IUserDocument } from '@/types';
+import cors from 'cors';
+import express, { Request, Response } from 'express';
+import { Server } from 'socket.io';
+
+import type { IMessageDocument, IUserDocument } from '@/types';
 
 // create express app
 const app = express();
@@ -25,8 +25,8 @@ app.get('/test', (_req: Request, res: Response) => {
 });
 
 // Error Handling middlewares
-app.use(syntaxErrorHandler);
 app.use(mainErrorHandler);
+app.use(syntaxErrorHandler);
 app.use(notFound);
 
 // Start express server
@@ -80,3 +80,18 @@ io.on('connection', (socket) => {
     console.log(`User disconnected: ${socket.id}`);
   });
 });
+
+// Handle process termination:
+function shutDown() {
+  server.close(() => {
+    console.log('Closed out remaining connections');
+    process.exit(0);
+  });
+
+  // Close all Socket.IO connections
+  io.close(); // Ensure all sockets are closed as well.
+}
+
+// Create termination handlers (the signals you want to handle, e.g., from Unix)
+process.on('SIGTERM', shutDown);
+process.on('SIGINT', shutDown);

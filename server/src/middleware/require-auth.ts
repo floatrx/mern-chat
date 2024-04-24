@@ -1,9 +1,9 @@
+import { JWT_SECRET } from '@/config/const';
+import { User } from '@/models/user';
 import type { NextFunction, Request, Response } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 
-import { JWT_SECRET } from '@/config/const';
-import { User } from '@/models/user';
 import type { JWTPayload } from '@/types/jwt';
 import type { IUserDocument } from '@/types/user';
 

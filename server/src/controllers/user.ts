@@ -1,9 +1,9 @@
+import { generateToken } from '@/lib/utils';
+import { User } from '@/models/user';
 import type { Request, Response } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 
-import { generateToken } from '@/lib/utils';
-import { User } from '@/models/user';
-import type { IUserAuthResponse, IUserBase, IUserCreatePayload, IUserLoginPayload } from '@/types';
+import type { IUser, IUserAuthResponse, IUserCreatePayload, IUserDocument, IUserLoginPayload } from '@/types';
 
 /**
  * @description     Get user profile
@@ -11,10 +11,15 @@ import type { IUserAuthResponse, IUserBase, IUserCreatePayload, IUserLoginPayloa
  * @access          Private
  * @param           {Object} req.query.search - search keyword
  */
-export const allUsers = expressAsyncHandler(async (req: Request<never, IUserBase[]>, res: Response) => {
+export const allUsers = expressAsyncHandler(async (req: Request<never, IUserDocument[], string, { search: string }>, res: Response) => {
   const keyword = req.query.search
     ? {
-        $or: [{ name: { $regex: req.query.search, $options: 'i' } }, { email: { $regex: req.query.search, $options: 'i' } }],
+        $or: [
+          // search by name
+          { name: { $regex: req.query.search, $options: 'i' } },
+          // or by email
+          { email: { $regex: req.query.search, $options: 'i' } },
+        ],
       }
     : {};
 

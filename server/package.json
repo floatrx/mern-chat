@@ -1,23 +1,16 @@
 {
-  "name": "mern-chat-api",
-  "version": "1.0.0",
-  "description": "API for MERN Chat App",
-  "main": "index.js",
+  "name": "mern-chat-server",
+  "private": true,
+  "version": "0.0.0",
+  "description": "[Server/API] MERN Chat App",
+  "main": "src/index.ts",
   "scripts": {
-    "ts": "tsc --noEmit",
-    "lint": "eslint . --ext .ts --max-warnings 0",
     "start": "ts-node -r tsconfig-paths/register src",
     "dev": "nodemon -q -w './**' --ext 'ts,json' --exec 'yarn start'",
-    "pretty": "prettier --write .",
-    "mongo": "cd mongo && docker-compose up -d"
+    "ts": "tsc --noEmit",
+    "lint": "eslint . --ext .ts --max-warnings 0",
+    "pretty": "prettier --write ."
   },
-  "keywords": [
-    "api",
-    "express",
-    "typescript",
-    "socket.io",
-    "mongodb"
-  ],
   "author": "floatrx <ifloatrx@gmail.com>",
   "license": "ISC",
   "dependencies": {
@@ -31,6 +24,7 @@
     "socket.io": "^4.7.5"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
@@ -39,7 +33,6 @@
     "@types/node": "^20.11.30",
     "@types/socket.io": "^3.0.2",
     "nodemon": "^3.1.0",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.4.3"
+    "tsconfig-paths": "^4.2.0"
   }
 }
