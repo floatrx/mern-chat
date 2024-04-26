@@ -9,11 +9,6 @@
   "bracketSpacing": true,
   "endOfLine": "lf",
   "jsxSingleQuote": false,
-  "plugins": ["prettier-plugin-tailwindcss", "@trivago/prettier-plugin-sort-imports"],
-  "importOrder": ["(^react|react|node|vite)", "<THIRD_PARTY_MODULES>", "@/components/features", "@/components/ui", "@/types", "^[./]"],
-  "importOrderSeparation": true,
-  "importOrderGroupNamespaceSpecifiers": true,
-  "importOrderSortSpecifiers": true,
   "overrides": [
     {
       "files": ["*.{ts,tsx}"],
