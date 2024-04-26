@@ -10,3 +10,8 @@ export interface IChat {
 }
 
 export interface IChatDocument extends IChat, Document {}
+
+export interface IChatCreateRequest {
+  chatName: string;
+  users: string[];
+}

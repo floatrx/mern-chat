@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import mongoose, { Schema } from 'mongoose';
-
 import { setupJSONTransform } from '@/lib/transform';
+
 import type { IUserDocument, IUserModel } from '@/types/user';
 
 const userSchema = new Schema<IUserDocument>(
@@ -9,11 +9,6 @@ const userSchema = new Schema<IUserDocument>(
     name: { type: 'String', required: true },
     email: { type: 'String', unique: true, required: true },
     password: { type: 'String', required: true },
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
   },
   { timestamps: true },
 );

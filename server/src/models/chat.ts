@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
-
 import { setupJSONTransform } from '@/lib/transform';
+
 import type { IChatDocument } from '@/types/chat';
 
 const chatSchema = new Schema<IChatDocument>(

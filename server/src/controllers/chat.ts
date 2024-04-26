@@ -1,35 +1,49 @@
-// chat controller
-import expressAsyncHandler from 'express-async-handler';
-
 import { Chat } from '@/models/chat';
 
-export const createChat = expressAsyncHandler(async (req, res) => {
-  const { users = [] } = req.body;
-  const chatData = {
-    chatName: req.user._id,
-    isGroupChat: !!users.length,
-    users: [req.user, ...users],
-  };
-  const chat = await Chat.create(chatData);
-  res.json(chat);
-});
+import { handleAsyncErrors } from '@/decorators/handle-async-errors';
 
-export const listChats = expressAsyncHandler(async (req, res) => {
-  const chats = await Chat.find({ users: req.user._id });
-  res.json(chats);
-});
+import type { Request, Response } from 'express';
+import type { IChatCreateRequest, IChatDocument } from '@/types/chat';
 
-export const joinChat = expressAsyncHandler(async (req, res) => {
-  const chat = await Chat.findById(req.params.id);
-  if (!chat) {
-    res.status(404);
-    throw new Error('Chat not found');
+@handleAsyncErrors
+export class ChatController {
+  static async create(req: Request<never, never, IChatCreateRequest>, res: Response<IChatDocument>) {
+    const { users = [], chatName } = req.body;
+    const chatData = {
+      chatName: chatName || req.user._id,
+      isGroupChat: !!users.length,
+      users: [req.user, ...users],
+    };
+    const chat = await Chat.create(chatData);
+    res.json(chat);
   }
 
-  if (chat.isGroupChat) {
-    chat.users.push(req.user);
-    await chat.save();
+  /**
+   * Get all chats
+   * @returns status 200 if OK
+   */
+  static async list(req: Request, res: Response) {
+    const chats = await Chat.find({ users: req.user._id }).populate('users');
+    res.json(chats);
   }
 
-  res.json(chat);
-});
+  /**
+   * Join chat
+   * @returns status 200 if OK
+   * @returns status 404 if chat not found
+   */
+  static async join(req: Request, res: Response) {
+    const chat = await Chat.findById(req.params.id);
+    if (!chat) {
+      res.status(404);
+      throw new Error('Chat not found');
+    }
+
+    if (chat.isGroupChat) {
+      chat.users.push(req.user);
+      await chat.save();
+    }
+
+    res.json(chat);
+  }
+}

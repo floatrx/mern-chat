@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { MONGO_HOST, MONGO_URI } from './const';
+import { MONGO_HOST, MONGO_URI } from '@/config/const';
 
 /**
  * Connect to MongoDB

@@ -3,9 +3,6 @@ import { Document, Model } from 'mongoose';
 export interface IUserBase {
   name: string;
   email: string;
-  isAdmin: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface IUser extends IUserBase {
@@ -19,24 +16,9 @@ export interface IUserDocument extends IUser, Document {
 export interface IUserModel extends Model<IUserDocument> {}
 
 export interface IUserCreatePayload {
-  name?: string;
-  email?: string;
-  password?: string;
-}
-
-export interface IUserAuthResponse {
-  _id: string;
   name: string;
   email: string;
-  isAdmin: boolean;
-  token: string;
+  password: string;
 }
 
-export interface IUsersListResponse {
-  users: IUserBase[];
-}
-
-export interface IUserLoginPayload {
-  email?: string;
-  password?: string;
-}
+export interface IUserCreateResponse extends IUserDocument {}

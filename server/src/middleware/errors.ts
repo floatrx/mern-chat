@@ -3,10 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 /**
  * 404 handler (middleware)
  */
-export const notFound = (req: Request, res: Response, next: NextFunction) => {
-  const error = new Error(`Not Found - ${req.originalUrl}`);
-  res.status(404);
-  next(error);
+export const notFound = (req: Request, res: Response) => {
+  res.status(404).json({ message: `Error 404! Endpoint [${req.method}] ${req.originalUrl} not found ` });
 };
 
 /**
@@ -32,5 +30,4 @@ export const syntaxErrorHandler = (err: any, _req: Request, res: Response, next:
   if (err instanceof SyntaxError && 'status' in err && err.status === 400 && 'body' in err) {
     return res.status(400).send({ status: 400, message: err.message }); // Bad request
   }
-  next();
 };
